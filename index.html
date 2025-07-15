@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matabeleland High Impact Projects Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #0b3d91;
+      padding: 1rem;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+
+    .logo-left, .logo-right {
+      position: absolute;
+      top: 10px;
+      width: 60px;
+      height: auto;
+    }
+
+    .logo-left {
+      left: 10px;
+    }
+
+    .logo-right {
+      right: 10px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 1rem;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .image-container {
+      flex: 1 1 500px;
+      max-width: 600px;
+      background-color: white;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .dashboard {
+      flex: 2 1 600px;
+      background-color: white;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .plot-container {
+      margin-bottom: 1rem;
+      transition: transform 0.3s;
+    }
+
+    .plot-container:hover {
+      transform: scale(1.02);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .gallery-item {
+      flex: 1 1 300px;
+      max-width: 300px;
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .gallery-item p {
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="opc.jpg" alt="OPC Logo Left" class="logo-left" />
+    <img src="opc.jpg" alt="OPC Logo Right" class="logo-right" />
+    <h1>ENVIRONMENTAL PLANNING AND MANAGEMENT DEPARTMENT<br>OPC MATABELELAND SOUTH PROVINCE</h1>
+    <h2>Matabeleland South Province High Impact<br>and Natinal Flagship Projects</h2>
+    <p>Progress Dashboard</p>
+  </header>
+
+  <div class="container">
+    <div class="image-container">
+      <h2>Project Map</h2>
+      <img src="impact.png" alt="Map of Matabeleland High Impact Projects" />
+
+       <!-- Embedded WebGIS Map -->
+  <iframe src="qgis2web/web.html" width="100%" height="500" style="border: none; border-radius: 10px;"></iframe>
+    </div>
+    <div class="dashboard">
+      <h2>Project Completion Status</h2>
+      <div id="progressChart" class="plot-container"></div>
+      <div id="categoryChart" class="plot-container"></div>
+    </div>
+  </div>
+
+  <script>
+    const projects = [
+      "Beit Bridge Redevelopment Housing Project",
+      "Thuli Manyange Dam",
+      "Mat-South Provincial Magistrate Court",
+      "J.M. Poly College Extension",
+      "Zhove Irrigation Project",
+      "Beit Bridge BorderPost Immigration Staff Houses",
+      "Gwanda Maphisa Road",
+      "West Nicholson Mberengwa Road",
+      "BeitBridge-Masvingo Road",
+      "Mangwe District Makorokoro Garden",
+      "Masholomoshe Irrigation",
+      "Filabusi District Registry Offices",
+      "BeitBridge VID Depot"
+    ];
+
+    const completion = [73, 33, 68, 98, 97, 100, 13, 13, 85, 95, 99, 80, 95];
+
+    Plotly.newPlot('progressChart', [{
+      x: projects,
+      y: completion,
+      type: 'bar',
+      marker: { color: '#0074D9' },
+      hoverinfo: 'x+y',
+      text: completion.map(p => p + '%'),
+      textposition: 'auto'
+    }], {
+      title: 'Completion % per Project',
+      yaxis: { range: [0, 100] },
+      margin: { t: 40, b: 150 },
+      plot_bgcolor: '#f0f2f5',
+      paper_bgcolor: 'white',
+      font: { color: '#333' }
+    });
+
+    Plotly.newPlot('categoryChart', [{
+      labels: projects,
+      values: completion,
+      type: 'pie',
+      hoverinfo: 'label+percent',
+      textinfo: 'label+percent'
+    }], {
+      title: 'Project Share by Completion',
+      plot_bgcolor: '#f0f2f5',
+      paper_bgcolor: 'white',
+      font: { color: '#333' }
+    });
+  </script>
+
+  <section style="padding: 2rem; background-color: #fff; margin: 2rem auto; width: 95%; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 12px;">
+    <h2 style="text-align: center; margin-bottom: 1rem; color: #0b3d91;">Other Departmental Projects</h2>
+    <div class="gallery">
+      <div class="gallery-item">
+        <img src="xintal.jpg" alt="Other Project 1" />
+        <p>Palm River Multi-Spectrum Environmental<br>Audit Report
+Focus: Awareness and Compliance Evaluation with Acts and Statutory Instruments Governing Mining Activities
+.</p>
+      </div>
+      <div class="gallery-item">
+        <img src="baboon.png" alt="Other Project 2" />
+        <p>Human Wildlife Comflict Hot spot mapping: Focusing on<br>
+        in Baboons Papio ursinus </p>
+      </div>
+      <div class="gallery-item">
+        <img src="LUC (1).png" alt="Other Project 3" />
+        <p>Gwanda Town Land cover classification mapping using GIS and Remote Sensing</p>
+      </div>
+      <div class="gallery-item">
+        <img src="plumtree.png" alt="Other Project 4" />
+        <p>Using Machine Learning and Remote Sensing<br>for land cover 
+          classification<br></p>
+      </div>
+      <div class="gallery-item">
+        <img src="Mining.jpg" alt="Other Project 4" />
+        <p>Using Machine Learning and Remote Sensing<br>for land cover 
+          classification<br></p>
+      </div>
+      <div class="gallery-item">
+        <img src="solar.jpg" alt="Other Project 4" />
+        <p>Using Machine Learning and Remote Sensing<br>for land cover 
+          classification<br></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ YOUR TABLE SECTION IS INCLUDED AS IS -->
+  <section style="padding: 2rem; background-color: #fff; margin: 2rem auto; width: 95%; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 12px;">
+    <h2 style="text-align: center; margin-bottom: 1rem; color: #0b3d91;">OFFICE OF THE PRESIDENT AND CABINET - MATABELELAND SOUTH PROVINCE FLAGSHIP PROJECTS</h2>
+    <table style="width: 100%; border-collapse: collapse;">
+      <tbody>
+      <tr>
+        <th style='border: 1px solid #ccc; padding: 0.75rem; background-color: #0b3d91; color: white;'>CATEGORY:HIGH IMPACT/NATIONAL FLAGSHIP</th>
+        <th style='border: 1px solid #ccc; padding: 0.75rem; background-color: #0b3d91; color: white;'>ACHIEVEMENTS</th>
+      </tr>
+      <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Beitbridge Redevelopment Housing Project</h4><br/>Construction of Employee houses 200 units<br/>Project Progress at 65% completion</td>
+      </tr>
+      <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Mat-South Provincial Magistrate Court Project</h4><br/>Project Progress at 68% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>JMPoly College Extension</h4><br/>Construction of  Home Economics block<br/>Project Progress at 98% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>NATIONAL FLAGSHIP</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Beit-Bridge-Masvingo Road Upgrading</h4><br/>Progress at 85% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Masholomoshe Irrigation Project</h4><br/>- Irrigation Scheme enjoys a total of 50 hectares of land<br>
+- 38.8 hectares of land is dedicated to farming of Maize, Tomatoes Cabbage.<br>
+- Installed irrigation pivots with solar power station.<br>
+- Has canals and water pipes drawing from Ngezi Dam<br>
+- 131 farmers <br/>Project Progress at 65% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>NATIONAL FLAGSHIP</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Thuli-Manyange Dam</h4><br/>Project Progress at 33% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>NATIONAL FLAGSHIP</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>The Zhove irrigation project</h4><br/>•  Government and private sector joint venture in fisheries production at 97%.<br> In terms of value addition to Zhove dam there are cruise boats and fisheries activities.
+<br/>Project Progress at 97% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Gwanda-Maphisa Road</h4><br/>Project Progress at 13% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>West Nichlison-Mberengwa Road</h4><br/>Project Progress at 13% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Mangwe District Makorokoro Garden</h4><br/>• 1.2 hactares of land planted with cabbage, vegetables, Butternuts and Tomatoes.<br>
+• Fish have been harvested twice, currently there are 2000 fish
+<br>Construction Project Progress at 95% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Filabusi District Registry Offices</h4><br/>Construction of Registry Offices<br/>Project Progress at 80% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Beit-Bridge-VID Depot</h4><br/>Construction of VID Depot<br/>Project Progress at 95% completion</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>HIGH IMPACT</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Bopoma Glass-Block Dam Project</h4><br/>Construction of a Dam<br/>Project Progress at planning stage</td>
+      </tr>
+       <tr>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>NATIONAL FLAGSHIP</h4></td>
+        <td style='border: 1px solid #ccc; padding: 0.75rem;'><h4>Maitengwe Boarder Post</h4><br/>Construction of a Boarder Post<br/>Project Progress at planning stage</td>
+      </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" style="text-align: center; padding: 1rem; font-weight: bold; background-color: #f9f9f9;">
+            Department of Infrastructure Planning and Environmental Planning and Management, OPC Matabeleland South Province
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </section>
+</body>
+</html>
